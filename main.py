@@ -1,4 +1,6 @@
 from turtle import Screen
+
+import paddle
 from paddle import Paddle
 from pong import Pong
 from scoreboard import Scoreboard
@@ -51,6 +53,7 @@ screen.onkeyrelease(key="Down", fun=lambda: KEYS.update(down = False))
 
 #GAME LOOP:
 computer_direction = 'up'
+player_direction =""
 while GAME:
     #UPDATER
     time.sleep(REFRESH_RATE)
@@ -77,11 +80,28 @@ while GAME:
     #PONG COLLIDES WITH PADDLE
     if round(pong.xcor())<= player_paddle.xcor()+15 and round(pong.ycor()) in range(round(player_paddle.ycor())-55,round(player_paddle.ycor())+55) :
         pong.speed_vector[0] = -pong.speed_vector[0]
-        print(pong.xcor(), pong.speed_vector[0])
+        if player_direction == "down":
+            pong.speed_vector[1] = -2 * (paddle.PADDLE_DEFAULT_SPEED) - pong.speed_vector[1]
+        elif player_direction == "up":
+            pong.speed_vector[1] = 2 * (paddle.PADDLE_DEFAULT_SPEED) - pong.speed_vector[1]
+        else:
+            pass
+
+
         player_scoreboard.increase_score()
         player_scoreboard.update_scoreboard()
     if round(pong.xcor())>= computer_paddle.xcor()-15 and round(pong.ycor()) in range(round(computer_paddle.ycor())-55,round(computer_paddle.ycor())+55):
         pong.speed_vector[0] = -pong.speed_vector[0]
+
+        if round(pong.xcor()) <= player_paddle.xcor() + 15 and round(pong.ycor()) in range(
+                round(player_paddle.ycor()) - 55, round(player_paddle.ycor()) + 55):
+            pong.speed_vector[0] = -pong.speed_vector[0]
+            if player_direction == "down":
+                pong.speed_vector[1] = -2 * (paddle.PADDLE_DEFAULT_SPEED) - pong.speed_vector[1]
+            elif player_direction == "up":
+                pong.speed_vector[1] = 2 * (paddle.PADDLE_DEFAULT_SPEED) - pong.speed_vector[1]
+            else:
+                pass
         computer_scoreboard.increase_score()
         computer_scoreboard.update_scoreboard()
     pong.move()
@@ -89,7 +109,9 @@ while GAME:
     # PLAYER MOVEMENT LOGIC
     if KEYS["up"]:
         player_paddle.up()
-
+        player_direction = "up"
     if KEYS["down"]:
         player_paddle.down()
+        player_direction ="down"
+    player_direction = ""
 screen.exitonclick()
