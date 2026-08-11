@@ -93,15 +93,15 @@ while GAME:
     if round(pong.xcor())>= computer_paddle.xcor()-15 and round(pong.ycor()) in range(round(computer_paddle.ycor())-55,round(computer_paddle.ycor())+55):
         pong.speed_vector[0] = -pong.speed_vector[0]
 
-        if round(pong.xcor()) <= player_paddle.xcor() + 15 and round(pong.ycor()) in range(
-                round(player_paddle.ycor()) - 55, round(player_paddle.ycor()) + 55):
-            pong.speed_vector[0] = -pong.speed_vector[0]
-            if player_direction == "down":
-                pong.speed_vector[1] = -2 * (paddle.PADDLE_DEFAULT_SPEED) - pong.speed_vector[1]
-            elif player_direction == "up":
-                pong.speed_vector[1] = 2 * (paddle.PADDLE_DEFAULT_SPEED) - pong.speed_vector[1]
-            else:
-                pass
+    if round(pong.xcor()) <= player_paddle.xcor() + 15 and round(pong.ycor()) in range(
+            round(player_paddle.ycor()) - 55, round(player_paddle.ycor()) + 55):
+        pong.speed_vector[0] = -pong.speed_vector[0]
+        if player_direction == "down":
+            pong.speed_vector[1] = -2 * (paddle.PADDLE_DEFAULT_SPEED) - pong.speed_vector[1]
+        elif player_direction == "up":
+            pong.speed_vector[1] = 2 * (paddle.PADDLE_DEFAULT_SPEED) - pong.speed_vector[1]
+        else:
+            pass
         computer_scoreboard.increase_score()
         computer_scoreboard.update_scoreboard()
     pong.move()
