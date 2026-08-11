@@ -1,5 +1,6 @@
 from turtle import Screen
 from paddle import Paddle
+from pong import Pong
 import time
 KEYS = {
     "up"  : False,
@@ -19,6 +20,7 @@ screen.title("Ping Pong")
 screen.tracer(0)
 player_paddle = Paddle(-390,0)
 computer_paddle = Paddle(380,0)
+pong = Pong()
 
 screen.listen()
 screen.onkeypress(key="Up",   fun=lambda: KEYS.update(up = True))
