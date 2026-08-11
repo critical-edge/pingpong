@@ -8,6 +8,8 @@ KEYS = {
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 REFRESH_RATE = 0.02
+UPPER_BOUND =  250
+LOWER_BOUND = -250
 GAME = True
 
 screen = Screen()
@@ -16,16 +18,26 @@ screen.bgcolor("black")
 screen.title("Ping Pong")
 screen.tracer(0)
 pad = Paddle(-390,0)
+computer_paddle = Paddle(380,0)
 
 screen.listen()
 screen.onkeypress(key="Up",   fun=lambda: KEYS.update(up = True))
 screen.onkeyrelease(key="Up", fun=lambda: KEYS.update(up = False))
 screen.onkeypress(key="Down", fun= lambda: KEYS.update(down = True))
 screen.onkeyrelease(key="Down", fun=lambda: KEYS.update(down = False))
-
+computer_direction = 'up'
 while GAME:
     time.sleep(REFRESH_RATE)
     screen.update()
+    if computer_paddle.ycor() >= UPPER_BOUND:
+        computer_direction = "down"
+    if computer_direction == "down":
+        computer_paddle.down()
+    if computer_paddle.ycor() <= LOWER_BOUND:
+        computer_direction = "up"
+    if computer_direction == "up":
+        computer_paddle.up()
+
     if KEYS["up"]:
         pad.up()
 
