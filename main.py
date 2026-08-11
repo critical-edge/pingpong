@@ -17,7 +17,7 @@ screen.setup(width= SCREEN_WIDTH,height=SCREEN_HEIGHT)
 screen.bgcolor("black")
 screen.title("Ping Pong")
 screen.tracer(0)
-pad = Paddle(-390,0)
+player_paddle = Paddle(-390,0)
 computer_paddle = Paddle(380,0)
 
 screen.listen()
@@ -39,8 +39,8 @@ while GAME:
         computer_paddle.up()
 
     if KEYS["up"]:
-        pad.up()
+        player_paddle.up()
 
     if KEYS["down"]:
-        pad.down()
+        player_paddle.down()
 screen.exitonclick()
