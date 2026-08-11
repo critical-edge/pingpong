@@ -1,6 +1,7 @@
 from turtle import Screen
 from paddle import Paddle
 from pong import Pong
+from scoreboard import Scoreboard
 import time
 #GLOBAL VARIABLES:
 KEYS = {
@@ -24,6 +25,13 @@ screen.setup(width= SCREEN_WIDTH,height=SCREEN_HEIGHT)
 screen.bgcolor("black")
 screen.title("Ping Pong")
 screen.tracer(0)
+scoreboard = Scoreboard(0,0)
+scoreboard.clear()
+scoreboard.draw_margin()
+
+player_scoreboard = Scoreboard(-200,250)
+computer_scoreboard = Scoreboard(200,250)
+
 
 
 #GAME OBJECTS SETUP:
@@ -69,12 +77,16 @@ while GAME:
     #PONG COLLIDES WITH PADDLE
     if round(pong.xcor())<= player_paddle.xcor()+15 and round(pong.ycor()) in range(round(player_paddle.ycor())-55,round(player_paddle.ycor())+55) :
         pong.speed_vector[0] = -pong.speed_vector[0]
-    if computer_paddle.distance(pong) <= 52.20:
+        print(pong.xcor(), pong.speed_vector[0])
+        player_scoreboard.increase_score()
+        player_scoreboard.update_scoreboard()
+    if round(pong.xcor())>= computer_paddle.xcor()-15 and round(pong.ycor()) in range(round(computer_paddle.ycor())-55,round(computer_paddle.ycor())+55):
         pong.speed_vector[0] = -pong.speed_vector[0]
-
+        computer_scoreboard.increase_score()
+        computer_scoreboard.update_scoreboard()
     pong.move()
 
-    #PLAYER MOVEMENT LOGIC
+    # PLAYER MOVEMENT LOGIC
     if KEYS["up"]:
         player_paddle.up()
 
