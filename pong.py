@@ -6,3 +6,7 @@ class Pong(Turtle):
         self.color("white")
         self.shapesize(stretch_wid= 0.5,stretch_len=0.5)
         self.penup()
+        self.speed_vector = [-12,16]
+    def move(self):
+        self.sety(self.ycor() + self.speed_vector[1])
+        self.setx(self.xcor() + self.speed_vector[0])
